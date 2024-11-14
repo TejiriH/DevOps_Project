@@ -73,7 +73,7 @@ jobs:
       - name: Run Jest tests
         run: |
           npm test  # Assumes you have a test script defined in package.json
-        working-directory: /home/runner/work/DevOps_Projects/DevOps_Projects/GitAction_workaround
+        working-directory: ./GitAction_workaround
 
   create-tag:
     runs-on: ubuntu-latest
