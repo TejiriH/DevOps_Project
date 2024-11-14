@@ -61,6 +61,12 @@ jobs:
         #  npm run lint  # Assumes you have a lint script defined in package.json
 
       # Step 6: Run Jest tests
+      
+      - name: Fix permissions for Jest executable
+        run: sudo chmod +x ./node_modules/.bin/jest
+      - name: location
+        run: pwd
+    
       - name: Run Jest tests
         run: |
           npm test  # Assumes you have a test script defined in package.json
