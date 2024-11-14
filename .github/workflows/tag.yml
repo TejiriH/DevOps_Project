@@ -62,16 +62,17 @@ jobs:
 
       # Step 6: Run Jest tests
       
-     # - name: Fix permissions for Jest executable
-      #  run: chmod +x ./node_modules/.bin/jest
+      - name: Fix permissions for Jest executable
+        run: chmod +x ./GitAction_workaround/node_modules/.bin/jest
+        
       - name: location
         run: pwd
 
-      - name: checking permission
-        run: |
-          ls -latr ./GitAction_workaround
-          ls -latr ./GitAction_workaround/node_modules
-          ls -latr ./GitAction_workaround/node_modules/.bin
+     # - name: checking permission
+        # run: |
+        #   ls -latr ./GitAction_workaround
+        #   ls -latr ./GitAction_workaround/node_modules
+        #   ls -latr ./GitAction_workaround/node_modules/.bin
         
         
       - name: Run Jest tests
