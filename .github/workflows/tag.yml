@@ -68,7 +68,7 @@ jobs:
         run: pwd
 
       - name: checking permission
-        run: ls -latr
+        run: ls -latr ./GitAction_workaround
         
       - name: Run Jest tests
         run: |
