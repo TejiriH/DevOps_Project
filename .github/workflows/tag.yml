@@ -28,8 +28,8 @@ jobs:
       - name: Change to the correct directory
         run: cd GitAction_workaround
 
-      - name: check current directory
-        run: pwd
+      - name: checking contents
+        run: ls
         
       # Step 2: Set up Node.js for the matrix build
       - name: Set up Node.js ${{ matrix.node-version }}
