@@ -71,7 +71,7 @@ jobs:
         run: |
           ls -latr ./GitAction_workaround
           ls -latr ./GitAction_workaround/node_modules
-          ls -latr ./GitAction_workaround/node_modules/bin
+          ls -latr ./GitAction_workaround/node_modules/.bin
         
         
       - name: Run Jest tests
