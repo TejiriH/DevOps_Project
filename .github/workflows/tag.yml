@@ -26,7 +26,7 @@ jobs:
 
             # Change to the correct directory
       - name: Change to the correct directory
-        run: cd DevOps_Project/GitAction_workaround
+        run: cd GitAction_workaround
         
       # Step 2: Set up Node.js for the matrix build
       - name: Set up Node.js ${{ matrix.node-version }}
