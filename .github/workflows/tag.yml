@@ -60,7 +60,7 @@ jobs:
       # Step 6: Run Jest tests
       - name: Run Jest tests
         run: |
-          npm test  # Assumes you have a test script defined in package.json
+          sudo npx test  # Assumes you have a test script defined in package.json
         working-directory: /home/runner/work/DevOps_Projects/DevOps_Projects/GitAction_workaround
 
   create-tag:
