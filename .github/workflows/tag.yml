@@ -4,11 +4,13 @@ on:
   push:
     branches:
       - main  # Run for every push to the main branch
-    paths:
-      - DevOps_Projects/GitAction_workaround  # This will run the workflow only when files inside 'your-folder' are changed
+    #paths:
+      #- DevOps_Projects/GitAction_workaround  # This will run the workflow only when files inside 'your-folder' are changed
   pull_request:
-    paths:
-      - DevOps_Projects/GitAction_workaround  # This will run the workflow for pull requests that affect 'your-folder'
+    branches:
+      - main
+    #paths:
+     # - DevOps_Projects/GitAction_workaround  # This will run the workflow for pull requests that affect 'your-folder'
 
 jobs:
   build-and-test:
