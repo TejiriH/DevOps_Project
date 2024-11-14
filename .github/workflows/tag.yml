@@ -66,7 +66,10 @@ jobs:
       #  run: sudo chmod +x ./node_modules/.bin/jest
       - name: location
         run: pwd
-    
+
+      - name: checking permission
+        run: ls -latr
+        
       - name: Run Jest tests
         run: |
           npm test  # Assumes you have a test script defined in package.json
