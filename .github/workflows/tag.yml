@@ -62,8 +62,8 @@ jobs:
 
       # Step 6: Run Jest tests
       
-      - name: Fix permissions for Jest executable
-        run: sudo chmod +x ./node_modules/.bin/jest
+     # - name: Fix permissions for Jest executable
+      #  run: sudo chmod +x ./node_modules/.bin/jest
       - name: location
         run: pwd
     
