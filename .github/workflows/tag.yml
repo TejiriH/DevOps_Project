@@ -50,6 +50,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
+        working-directory: /home/runner/work/DevOps_Projects/DevOps_Projects/GitAction_workaround
 
       # Step 5: Run ESLint
      # - name: Run ESLint
@@ -60,6 +61,7 @@ jobs:
       - name: Run Jest tests
         run: |
           npm test  # Assumes you have a test script defined in package.json
+        working-directory: /home/runner/work/DevOps_Projects/DevOps_Projects/GitAction_workaround
 
   create-tag:
     runs-on: ubuntu-latest
