@@ -24,6 +24,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+            # Change to the correct directory
+      - name: Change to the correct directory
+        run: cd DevOps_Projects/GitAction_workaround
+        
       # Step 2: Set up Node.js for the matrix build
       - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
