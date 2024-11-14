@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x, 16.x]  # Matrix build for different Node.js versions
+        node-version: [18.x, 16.x]  # Matrix build for different Node.js versions
 
     steps:
       # Step 1: Checkout the repository
