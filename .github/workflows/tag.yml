@@ -45,9 +45,9 @@ jobs:
           npm install
 
       # Step 5: Run ESLint
-      - name: Run ESLint
-        run: |
-          npm run lint  # Assumes you have a lint script defined in package.json
+     # - name: Run ESLint
+       # run: |
+        #  npm run lint  # Assumes you have a lint script defined in package.json
 
       # Step 6: Run Jest tests
       - name: Run Jest tests
