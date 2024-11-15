@@ -136,12 +136,13 @@ jobs:
           # Push all tags as a fallback
           git push origin --tags
 
+          git fetch --tags # Ensure tags are fetched for release action to take place
 
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
-        with:
-          files: ./GitAction_workaround/*  # Specify files you want to include in the release
+        #with:
+         # files: ./GitAction_workaround/*  # Specify files you want to include in the release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatically available in GitHub Actions
 
