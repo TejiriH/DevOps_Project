@@ -92,6 +92,7 @@ jobs:
       - name: Create semantic version tag
         id: create_tag
         run: |
+          cd GitAction_workaround
           VERSION=$(npm version patch -m "Release version %s")  # Increment patch version
           echo "Created version: $VERSION"
           git push origin $VERSION
@@ -99,7 +100,7 @@ jobs:
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
         with:
-          files: DevOps_Projects/GitAction_workaround/*  # Specify files you want to include in the release
+          files: ./GitAction_workaround/*  # Specify files you want to include in the release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatically available in GitHub Actions
 
