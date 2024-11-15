@@ -158,6 +158,11 @@ jobs:
 
      - name: Checkout repository
        uses: actions/checkout@v2
+
+     - name: Fetch tags (ensure)
+       run: |
+         git fetch --tags
+         git tag
         
      - name: Create GitHub release
        uses: softprops/action-gh-release@v1
