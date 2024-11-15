@@ -95,18 +95,38 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd GitAction_workaround  # Navigate to the directory containing package.json
-          VERSION=$(npm version patch -m "Release version %s")  # Increment patch version and create tag
+      
+          # Increment patch version and create a tag
+          VERSION=$(npm version patch -m "Release version %s")
           echo "Created version: $VERSION"
-          git config user.name "GitHub Actions"  # Configure git user
+      
+          # Configure git user for actions
+          git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
+      
+          # Ensure repository is up-to-date
           git pull origin main
+      
+          # Stage changes made by npm version
           git add package.json package-lock.json
-          git commit -am "chore: release $VERSION"  # Commit version bump changes
-          git push origin HEAD  # Push branch changes
-          git tag # Debug: list all tags to verify creation
-          git fetch --tags  # Fetch all tags to ensure synchronization
-          git push origin $VERSION  # Push the new tag explicitly
+          git commit -m "chore: release $VERSION"
+      
+          # Push branch changes
+          git push origin HEAD
+      
+          # Debug: List local tags and confirm the created tag exists
+          echo "Local tags before pushing:"
+          git tag
+          echo "Details of the created tag:"
+          git show "$VERSION"
+      
+          # Push the newly created tag explicitly
+          git push origin "$VERSION"
+      
+          # Push all tags as a fallback
+          git push origin --tags
+
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
