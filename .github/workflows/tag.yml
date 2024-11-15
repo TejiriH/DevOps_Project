@@ -100,6 +100,7 @@ jobs:
           git config user.name "GitHub Actions"  # Configure git user
           git config user.email "actions@github.com"
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
+          git pull origin main
           git add package.json package-lock.json
           git commit -am "chore: release $VERSION"  # Commit version bump changes
           git push origin HEAD  # Push branch changes
