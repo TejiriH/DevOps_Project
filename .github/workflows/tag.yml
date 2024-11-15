@@ -91,15 +91,19 @@ jobs:
       # Step 1: Create a semantic version tag
       - name: Create semantic version tag
         id: create_tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd GitAction_workaround  # Navigate to the directory containing package.json
           VERSION=$(npm version patch -m "Release version %s")  # Increment patch version and create tag
           echo "Created version: $VERSION"
           git config user.name "GitHub Actions"  # Configure git user
           git config user.email "actions@github.com"
+          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
           git commit -am "chore: release $VERSION"  # Commit version bump changes
-          git push origin HEAD  # Push the branch changes
-          git push origin $VERSION  # Push the new tag to the remote repository
+          git push origin HEAD  # Push branch changes
+          git fetch --tags  # Fetch all tags to ensure synchronization
+          git push origin $VERSION  # Push the new tag explicitly
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
