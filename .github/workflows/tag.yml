@@ -102,6 +102,7 @@ jobs:
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
           git commit -am "chore: release $VERSION"  # Commit version bump changes
           git push origin HEAD  # Push branch changes
+          git tag # Debug: list all tags to verify creation
           git fetch --tags  # Fetch all tags to ensure synchronization
           git push origin $VERSION  # Push the new tag explicitly
 
