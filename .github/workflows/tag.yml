@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main  # Run for every push to the main branch
+    tags:
+      - '*'
     #paths:
       #- DevOps_Projects/GitAction_workaround  # This will run the workflow only when files inside 'your-folder' are changed
   pull_request:
