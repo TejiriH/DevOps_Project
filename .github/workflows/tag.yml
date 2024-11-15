@@ -166,6 +166,8 @@ jobs:
         
      - name: Create GitHub release
        uses: softprops/action-gh-release@v1
+       with:
+        tag_name: ${{ steps.create_tag.outputs.NEW_VERSION }}
        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatically available in GitHub Actions
 
