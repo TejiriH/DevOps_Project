@@ -96,6 +96,7 @@ jobs:
           VERSION=$(npm version patch -m "Release version %s")  # Increment patch version
           echo "Created version: $VERSION"
           git push origin $VERSION
+          git push origin HEAD
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v1
