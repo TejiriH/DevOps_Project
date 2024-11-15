@@ -98,12 +98,12 @@ jobs:
        uses: actions/checkout@v2
         
         # Step 1: Create a semantic version tag
-      - name: Create semantic version Tag
-        id: create_tag
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          run: |
-            cd GitAction_workaround  # Navigate to the directory containing package.json
+     - name: Create semantic version Tag
+       id: create_tag
+       env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       run: |
+          cd GitAction_workaround  # Navigate to the directory containing package.json
   
             # Pull latest changes and tags to ensure synchronization
             git pull origin main --tags
@@ -148,9 +148,9 @@ jobs:
             # Fetch tags to ensure the tag is available for the release action
             git fetch --tags
   
-      - name: Create GitHub release
-        uses: softprops/action-gh-release@v1
-        env:
+     - name: Create GitHub release
+       uses: softprops/action-gh-release@v1
+       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatically available in GitHub Actions
 
 
