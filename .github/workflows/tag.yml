@@ -141,7 +141,7 @@ jobs:
             git push origin HEAD
   
             # Push the newly created tag explicitly
-            git push origin "$NEW_VERSION"
+            #git push origin "$NEW_VERSION"
   
             # Push all tags as a fallback
             git push origin --tags
@@ -150,7 +150,7 @@ jobs:
             git fetch --tags
 
             # Save the tag name to the environment file
-            echo "tag_name=$NEW_VERSION" >> $GITHUB_ENV
+            echo "tag_name=$tag" >> $GITHUB_ENV
 
 
             
