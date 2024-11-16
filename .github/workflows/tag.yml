@@ -127,7 +127,7 @@ jobs:
             # Verify local tags and new tag creation
             echo "Local tags after npm version increment:"
             git tag
-  
+            echo "This is version $NEW_VERSION"
             # Configure git user for actions
             git config user.name "GitHub Actions"
             git config user.email "actions@github.com"
@@ -168,6 +168,7 @@ jobs:
        run: |
          git fetch --tags
          git tag
+         echo "The tag name is: ${{ env.tag_name }}"
   
      - name: Create GitHub release
        uses: softprops/action-gh-release@v1
