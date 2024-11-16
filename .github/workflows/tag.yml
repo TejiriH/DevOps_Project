@@ -151,6 +151,8 @@ jobs:
 
             # Save the tag name to the environment file
             echo "tag_name=$NEW_VERSION" >> $GITHUB_ENV
+
+
             
   create-release:
     runs-on: ubuntu-latest
@@ -166,6 +168,35 @@ jobs:
        run: |
          git fetch --tags
          git tag
+         
+
+     - name: Generate a new tag
+       id: tag
+       run: |
+         git fetch --tags
+         latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)
+         if [ -z "$latest_tag" ]; then
+         new_tag="v1.0.0"
+         else
+           IFS='.' read -r -a parts <<< "${latest_tag#v}" # Remove 'v' prefix
+           major=${parts[0]}
+           minor=${parts[1]}
+           patch=${parts[2]}
+           new_tag="v$major.$minor.$((patch + 1))"
+         fi
+         echo "New tag: $new_tag"
+         echo "tag_name=$new_tag" >> $GITHUB_ENV
+         git tag $new_tag
+         git push origin $new_tag
+
+
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.tag_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
         
      - name: Create GitHub release
        uses: softprops/action-gh-release@v1
@@ -173,3 +204,5 @@ jobs:
         tag_name: v1.0.0 #${{ env.tag_name }}  # Explicitly pass the tag name to the release action
        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatically available in GitHub Actions
+
+
