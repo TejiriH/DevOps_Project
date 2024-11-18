@@ -50,16 +50,21 @@ jobs:
           npm install
         working-directory: ./GitAction_workaround
 
+      - name: Fix permissions for Eslint & Jest executable
+        run: |
+          chmod +x ./GitAction_workaround/node_modules/.bin/eslint
+          chmod +x ./GitAction_workaround/node_modules/.bin/jest
+
       # Step 5: Run ESLint
       - name: Run ESLint
         run: |
           npm run lint  # Assumes you have a lint script defined in package.json
         working-directory: ./GitAction_workaround
 
-      # Step 6: Run Jest tests
+      # # Step 6: Run Jest tests
       
-      - name: Fix permissions for Jest executable
-        run: chmod +x ./GitAction_workaround/node_modules/.bin/jest
+      # - name: Fix permissions for Jest executable
+      #   run: chmod +x ./GitAction_workaround/node_modules/.bin/jest
         
       - name: location
         run: pwd      
