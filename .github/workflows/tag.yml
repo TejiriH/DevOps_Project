@@ -6,83 +6,75 @@ on:
       - main  # Run for every push to the main branch
     tags:
       - '*'
-    paths:
-      - GitAction_workaround/**  # This will run the workflow only when files inside 'your-folder' are changed
+    # paths:
+    #    - GitAction_workaround/**  # This will run the workflow only when files inside 'your-folder' are changed
   pull_request:
     branches:
       - main
-    paths:
-      - GitAction_workaround/** # This will run the workflow for pull requests that affect 'your-folder'
+    # paths:
+    #    - GitAction_workaround/** # This will run the workflow for pull requests that affect 'your-folder'
 
 jobs:
-#   build-and-test:
-#     runs-on: ubuntu-latest
-#     strategy:
-#       matrix:
-#         node-version: [18.x]  # Matrix build for different Node.js versions
+  build-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]  # Matrix build for different Node.js versions
 
-#     steps:
-#       # Step 1: Checkout the repository
-#       - name: Checkout repository
-#         uses: actions/checkout@v2
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-#             # Change to the correct directory
-#       - name: Change to the correct directory
-#         run: cd GitAction_workaround
+      # Step 2: Set up Node.js for the matrix build
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
 
-#       - name: checking contents
-#         run: ls
+      # Step 3: Cache node modules to speed up workflow
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+
+      - name: Upgrade npm 10.9.0
+        run: npm install -g npm@10.9.0
         
-#       # Step 2: Set up Node.js for the matrix build
-#       - name: Set up Node.js ${{ matrix.node-version }}
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: ${{ matrix.node-version }}
+      # Step 4: Install dependencies
+      - name: Install dependencies
+        run: |
+          npm install
+        working-directory: ./GitAction_workaround
 
-#       # Step 3: Cache node modules to speed up workflow
-#       - name: Cache node modules
-#         uses: actions/cache@v3
-#         with:
-#           path: ~/.npm
-#           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
-#           restore-keys: |
-#             ${{ runner.os }}-node-modules-
+      - name: Fix permissions for Eslint & Jest executable
+        run: |
+          chmod +x ./GitAction_workaround/node_modules/.bin/eslint
+          chmod +x ./GitAction_workaround/node_modules/.bin/jest
 
-#       - name: Upgrade npm 10.9.0
-#         run: npm install -g npm@10.9.0
-        
-#       # Step 4: Install dependencies
-#       - name: Install dependencies
-#         run: |
-#           npm install
-#         working-directory: /home/runner/work/DevOps_Projects/DevOps_Projects/GitAction_workaround
+      # Step 5: Run ESLint
+      - name: Run ESLint
+        run: |
+          cd GitAction_workaround
+          npm run lint  # Assumes you have a lint script defined in package.json
+        # working-directory: ./GitAction_workaround/package.json
 
-#       # Step 5: Run ESLint
-#      # - name: Run ESLint
-#        # run: |
-#         #  npm run lint  # Assumes you have a lint script defined in package.json
-
-#       # Step 6: Run Jest tests
+      # # Step 6: Run Jest tests
       
-#       - name: Fix permissions for Jest executable
-#         run: chmod +x ./GitAction_workaround/node_modules/.bin/jest
+      # - name: Fix permissions for Jest executable
+      #   run: chmod +x ./GitAction_workaround/node_modules/.bin/jest
         
-#       - name: location
-#         run: pwd      
+      - name: location
+        run: pwd      
         
-#       - name: Run Jest tests
-#         run: |
-#           npm test  # Assumes you have a test script defined in package.json
-#         working-directory: ./GitAction_workaround
+      - name: Run Jest tests
+        run: |
+          npm test  # Assumes you have a test script defined in package.json
+        working-directory: ./GitAction_workaround
 
-# #name: Create Release Tag
-  
-# #on:
-#  # push:
-# #    tags:
-# #   #    - 'v*'  # Trigger on version tag pushes like v1.0.0
-  
-# # jobs:
   Create-tag:
     runs-on: ubuntu-latest
     #needs: build-and-test  # Ensure this job runs after the tests pass
@@ -149,6 +141,7 @@ jobs:
      - name: Get the latest tag
        id: get-latest-tag
        run: |
+        git fetch --tags
         latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))
         echo "Latest tag: $latest_tag"
         echo "tag_name=$latest_tag" >> $GITHUB_ENV
