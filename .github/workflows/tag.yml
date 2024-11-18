@@ -160,10 +160,14 @@ jobs:
       - name: Deploy to EC2
         run: |
           mkdir -p ~/.ssh  # Ensure the .ssh directory exists
-          echo "${{ secrets.EC2_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          echo "${{ secrets.AWS_EC2_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
+
+          cat ~/.ssh/id_rsa
+          ls -latr ~/.ssh/
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $AWS_USER@$AWS_HOST "echo 'SSH Connection Successful'"
           
-          ssh -o StrictHostKeyChecking=no -i "$EC2_PRIVATE_KEY" $AWS_USER@$AWS_HOST << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $AWS_USER@$AWS_HOST << 'EOF'
           # Stop any existing application
           pm2 stop all || true
 
