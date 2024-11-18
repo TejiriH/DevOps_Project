@@ -7,12 +7,12 @@ on:
     tags:
       - '*'
     paths:
-      - ./GitAction_workaround  # This will run the workflow only when files inside 'your-folder' are changed
+      - GitAction_workaround/**  # This will run the workflow only when files inside 'your-folder' are changed
   pull_request:
     branches:
       - main
     paths:
-      - ./GitAction_workaround  # This will run the workflow for pull requests that affect 'your-folder'
+      - GitAction_workaround/** # This will run the workflow for pull requests that affect 'your-folder'
 
 jobs:
 #   build-and-test:
