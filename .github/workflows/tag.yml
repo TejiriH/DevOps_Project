@@ -51,9 +51,10 @@ jobs:
         working-directory: ./GitAction_workaround
 
       # Step 5: Run ESLint
-     # - name: Run ESLint
-       # run: |
-        #  npm run lint  # Assumes you have a lint script defined in package.json
+      - name: Run ESLint
+        run: |
+          npm run lint  # Assumes you have a lint script defined in package.json
+        working-directory: ./GitAction_workaround
 
       # Step 6: Run Jest tests
       
