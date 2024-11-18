@@ -4,8 +4,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "jest ./GitAction_workaround",
-    "lint": "eslint ./GitAction_workaround ."
+    "test": "jest",
+    "lint": "eslint ."
   },
   "keywords": [],
   "author": "",
