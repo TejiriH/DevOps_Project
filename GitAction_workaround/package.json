@@ -4,8 +4,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "jest DevOps_Projects/GitAction_workaround",
-    "lint": "eslint DevOps_Projects/GitAction_workaround ."
+    "test": "jest ./GitAction_workaround",
+    "lint": "eslint ./GitAction_workaround ."
   },
   "keywords": [],
   "author": "",
