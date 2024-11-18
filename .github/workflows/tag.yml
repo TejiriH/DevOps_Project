@@ -102,10 +102,6 @@ jobs:
             # Pull latest changes and tags to ensure synchronization
             git pull origin main --tags
   
-            # Get the latest existing tag
-            LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-            echo "Latest existing tag: $LATEST_TAG"
-  
             # Increment patch version and create new tag in package.json
             NEW_VERSION=$(npm version patch -m "Release version %s")
             echo "New version created by npm: $NEW_VERSION"
@@ -135,15 +131,8 @@ jobs:
   
             # Push the newly created tag explicitly
             git push origin "$NEW_VERSION"
-  
-            # Push all tags as a fallback
-            #git push origin --tags
-  
-            # Fetch tags to ensure the tag is available for the release action
-            git fetch --tags
 
-            # Save the tag name to the environment file
-           # echo "tag_name=$NEW_VERSION" >> $GITHUB_ENV
+
 
 
             
@@ -156,14 +145,6 @@ jobs:
 
      - name: Checkout repository
        uses: actions/checkout@v2
-
-     - name: Fetch tags (ensure)
-       run: |
-         git fetch --tags
-         git tag
-         echo "The tag name is: ${{ env.tag_name }}"
-         echo "The tag name is: $tag_name"
-         echo "The tag name is: $NEW_VERSION"
 
      - name: Get the latest tag
        id: get-latest-tag
