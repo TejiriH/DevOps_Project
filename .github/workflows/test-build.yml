@@ -32,11 +32,9 @@ jobs:
 
     # Install dependencies for the API and Webapp
     - name: Install API dependencies
-      working-directory: ./ecommerce/api
+      working-directory: .Dev/ecommerce/api
       run: |
-        ls
         pwd
-        cd ecommerce/api
         ls
         npm install
 
