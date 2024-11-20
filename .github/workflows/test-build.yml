@@ -71,7 +71,6 @@ jobs:
     - name: Run Jest tests for API
       working-directory: ./ecommerce/api
       run: |
-        run: |
         npm install --include=dev
         npm test -- --coverage --maxWorkers=2
 
