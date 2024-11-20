@@ -50,6 +50,11 @@ jobs:
       run: |
         npm install
 
+    - name: Fix permissions for Jest executable
+      run: |
+        chmod +x ./ecommerce/api/node_modules/.bin/jest
+        chmod +x ./ecommerce/webapp/node_modules/.bin/jest
+
     # Run ESLint in the API
     # - name: Run ESLint for API
     #   working-directory: ./ecommerce/api
