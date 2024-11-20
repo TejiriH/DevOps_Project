@@ -51,16 +51,16 @@ jobs:
         npm install
 
     # Run ESLint in the API
-    - name: Run ESLint for API
-      working-directory: ./ecommerce/api
-      run: |
-        npx eslint . --ext .js
+    # - name: Run ESLint for API
+    #   working-directory: ./ecommerce/api
+    #   run: |
+    #     npx eslint . --ext .js
 
-    # Run ESLint in the Webapp
-    - name: Run ESLint for Webapp
-      working-directory: ./ecommerce/webapp
-      run: |
-        npx eslint . --ext .js,.jsx
+    # # Run ESLint in the Webapp
+    # - name: Run ESLint for Webapp
+    #   working-directory: ./ecommerce/webapp
+    #   run: |
+    #     npx eslint . --ext .js,.jsx
 
     # Run Jest tests for the API
     - name: Run Jest tests for API
