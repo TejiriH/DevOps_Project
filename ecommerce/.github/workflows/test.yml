@@ -4,13 +4,13 @@ on:
   push:
     branches:
       - main
-   # paths:
-    #  - 'ecommerce/**'  # Trigger on push to any file inside the ecommerce folder
+    paths:
+      - 'ecommerce/**'  # Trigger on push to any file inside the ecommerce folder
   pull_request:
     branches:
       - main
-   # paths:
-    #  - 'ecommerce/**'  # Trigger on pull requests affecting the ecommerce folder
+    paths:
+      - 'ecommerce/**'  # Trigger on pull requests affecting the ecommerce folder
 
 jobs:
   build-and-test:
