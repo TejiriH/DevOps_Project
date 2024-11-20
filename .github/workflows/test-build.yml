@@ -30,9 +30,16 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
+
+    - name: Location
+      working-directory: ./ecommerce/api
+      run: |
+        pwd
+        ls
+
     # Install dependencies for the API and Webapp
     - name: Install API dependencies
-      working-directory: .Dev/ecommerce/api
+      working-directory: ./ecommerce/api
       run: |
         pwd
         ls
