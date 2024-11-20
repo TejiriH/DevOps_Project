@@ -2,11 +2,15 @@ name: E-Commerce App CI
 
 on:
   push:
-    paths:
-      - 'ecommerce/**'  # Trigger on push to any file inside the ecommerce folder
+    branches:
+      - main
+   # paths:
+    #  - 'ecommerce/**'  # Trigger on push to any file inside the ecommerce folder
   pull_request:
-    paths:
-      - 'ecommerce/**'  # Trigger on pull requests affecting the ecommerce folder
+    branches:
+      - main
+   # paths:
+    #  - 'ecommerce/**'  # Trigger on pull requests affecting the ecommerce folder
 
 jobs:
   build-and-test:
