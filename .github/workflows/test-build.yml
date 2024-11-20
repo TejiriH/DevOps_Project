@@ -71,14 +71,16 @@ jobs:
     - name: Run Jest tests for API
       working-directory: ./ecommerce/api
       run: |
-        npm install --include=dev
+        npm install --save-dev supertest
+        npm ci --include=dev
         npm test -- --coverage --maxWorkers=2
 
     # Run Jest tests for the Webapp
     - name: Run Jest tests for Webapp
       working-directory: ./ecommerce/webapp
       run: |
-        npm install --include=dev
+        npm install --save-dev supertest
+        npm ci --include=dev
         npm test -- --coverage --maxWorkers=2
 
     # Build the Webapp (optional, depending on your setup)
