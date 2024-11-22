@@ -1,20 +1,53 @@
 {
-    "name": "ecommerce-webapp",
-    "version": "1.0.0",
-    "dependencies": {
-      "react": "^18.2.0",
-      "react-dom": "^18.2.0",
-      "react-scripts": "5.0.1",
-      "axios": "^1.0.0"
+  "name": "ecommerce-webapp",
+  "version": "1.0.0",
+  "dependencies": {
+    "axios": "^1.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.28.0",
+    "react-scripts": "5.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.25.9",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
+    "babel-jest": "^29.7.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "supertest": "^7.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "test": "jest --coverage --maxWorkers=2",
+    "build": "react-scripts build"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/tests/**/*.{test,spec}.js",
+      "**/*.test.js",
+      "**/*.spec.js"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "transform": {
+      "^.+\\.(js|jsx)$": "babel-jest"
     },
-    "devDependencies": {
-      "jest": "^29.0.0",
-      "eslint": "^8.0.0"
-    },
-    "scripts": {
-      "start": "react-scripts start",
-      "test": "react-scripts test",
-      "build": "react-scripts build"
-    }
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "webapp"
+    ]
   }
-  
+}
