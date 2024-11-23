@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read   # Read access (if needed for deployment)
-      actions: write   # Write access for actions (needed for deployment)
+      #actions: write   # Write access for actions (needed for deployment)
 
     strategy:
       matrix:
