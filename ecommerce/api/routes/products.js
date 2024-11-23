@@ -1,20 +1,23 @@
+// routes/products.js
 const express = require('express');
 const router = express.Router();
 
-// Mock Data
-let products = [
-  { id: 1, name: 'Laptop', price: 1000 },
-  { id: 2, name: 'Phone', price: 500 },
+// Simulated product data (replace with database queries if needed)
+const products = [
+  { id: 1, name: 'Product 1', price: 10.0 },
+  { id: 2, name: 'Product 2', price: 20.0 },
 ];
 
-// Get Products
-router.get('/', (req, res) => res.json(products));
-
-// Add Product
-router.post('/', (req, res) => {
-  const newProduct = { id: Date.now(), ...req.body };
-  products.push(newProduct);
-  res.status(201).json(newProduct);
+// Route to get all products
+router.get('/', (req, res) => {
+  try {
+    res.status(200).json(products);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
 
+// Export the router to be used in server.js
 module.exports = router;
+

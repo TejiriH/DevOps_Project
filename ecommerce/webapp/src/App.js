@@ -1,61 +1,108 @@
-// import React from 'react';
-// import ProductList from './components/ProductList';
-// import Login from './components/Login';
-// import OrderPlacement from './components/OrderPlacement';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 
-// function App() {
-//   return (
-//     <div>
-//       <h1>E-Commerce Platform</h1>
-//       <Login />
-//       <ProductList />
-//       <OrderPlacement />
-//     </div>
-//   );
-// }
+// Products Component
+function Products() {
+  const [products, setProducts] = useState([]);
 
-// export default App;
+  useEffect(() => {
+    // Fetch products from the API
+    axios.get('/api/products')
+      .then(response => {
+        setProducts(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching products:', error);
+      });
+  }, []);
 
-// src/app.js
-const express = require('express');
-const app = express();
+  return (
+    <div>
+      <h1>Products</h1>
+      <ul>
+        {products.map(product => (
+          <li key={product.id}>{product.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
-// Middleware to handle JSON requests
-app.use(express.json());
+// Users Component
+function Users() {
+  const [users, setUsers] = useState([]);
 
-// Route for the root endpoint
-app.get('/', (req, res) => {
-  res.status(200).send('Welcome');
-});
+  useEffect(() => {
+    // Fetch users from the API
+    axios.get('/api/users')
+      .then(response => {
+        setUsers(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching users:', error);
+      });
+  }, []);
 
-// Route to get the list of products
-app.get('/api/products', (req, res) => {
-  try {
-    // Simulated product data (you can replace this with actual DB logic if needed)
-    const products = [
-      { id: 1, name: 'Product 1' },
-      { id: 2, name: 'Product 2' },
-    ];
-    
-    // Log the products data
-    console.log('Products:', products);
-    
-    // Respond with a 200 status and the products array
-    res.status(200).json(products);
-  } catch (error) {
-    // Log the error if one occurs
-    console.error('Error occurred in /api/products route:', error);
-    
-    // Send a 500 error response
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});
+  return (
+    <div>
+      <h1>Users</h1>
+      <ul>
+        {users.map(user => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
-// Assuming you're exporting the app for use in the test
-module.exports = app;
+// Orders Component
+function Orders() {
+  const [orders, setOrders] = useState([]);
 
+  useEffect(() => {
+    // Fetch orders from the API
+    axios.get('/api/orders')
+      .then(response => {
+        setOrders(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching orders:', error);
+      });
+  }, []);
 
-// Optionally, if you want to start the server in app.js, use this
-// if (require.main === module) {
-//   app.listen(3000, () => console.log('Server running on port 3000'));
-// }
+  return (
+    <div>
+      <h1>Orders</h1>
+      <ul>
+        {orders.map(order => (
+          <li key={order.id}>{`Order ${order.id}: ${order.description}`}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+// Main App Component with Routing
+function App() {
+  return (
+    <Router>
+      <div className="App">
+        <nav>
+          <Link to="/products">Products</Link>
+          <Link to="/users">Users</Link>
+          <Link to="/orders">Orders</Link>
+        </nav>
+        <Routes>
+          <Route path="/products" element={<Products />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/" element={<h1>Welcome to the E-Commerce Application</h1>} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
+

@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-const instance = axios.create({
-  baseURL: 'http://localhost:5000/api',
-});
+const getProducts = async () => {
+  const response = await axios.get('http://localhost:5000/api');
+  return response.data;
+};
 
-export default instance;
+export default getProducts;
+
