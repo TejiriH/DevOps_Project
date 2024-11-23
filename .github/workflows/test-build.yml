@@ -116,7 +116,6 @@ jobs:
     # Step 3: Build Docker images
     - name: Build Backend Docker image
       run: |
-        RUN chmod -R 755 ./app
         docker build -t ${{ secrets.DOCKER_USERNAME }}/my-backend:v1.0.0 ./ecommerce/api
 
     - name: Build Frontend Docker image
