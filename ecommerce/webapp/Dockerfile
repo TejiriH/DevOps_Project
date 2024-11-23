@@ -16,6 +16,9 @@ COPY . .
 # Build the app for production
 RUN npm run build
 
+# Ensure permissions are correct
+RUN chmod -R 755 /app
+
 # Use an official Nginx image to serve the built React app
 FROM nginx:alpine
 
