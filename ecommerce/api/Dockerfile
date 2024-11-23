@@ -1,28 +1,21 @@
-# Use the official Node.js image as a base image
-FROM node:18 AS build
+# Use Node.js image for the backend
+FROM node:18 AS backend
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json first for efficient caching
-COPY ./package*.json ./
+# Copy the backend's package.json and package-lock.json
+COPY ./api/package*.json ./
 
 # Install dependencies
 RUN npm install
 
-# Ensure files have the right permissions
-RUN chmod -R 755 /app
+# Copy the rest of the backend code
+COPY ./api ./
 
-# Copy the rest of the application
-COPY . ./
+# Expose the backend port (e.g., 3000)
+EXPOSE 3000
 
-# Run the build script
-RUN npm run build
-
-# Use Nginx to serve the built app
-FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Expose the Nginx port
-EXPOSE 80
+# Run the backend application (adjust to your start script)
+CMD ["npm", "start"]
 
