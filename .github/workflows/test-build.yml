@@ -86,4 +86,5 @@ jobs:
     - name: Build Webapp
       working-directory: ./ecommerce/webapp
       run: |
+        chmod +x ./node_modules/.bin/react-scripts
         npm run build
