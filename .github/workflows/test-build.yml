@@ -15,6 +15,10 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read   # Read access (if needed for deployment)
+      actions: write   # Write access for actions (needed for deployment)
+
     strategy:
       matrix:
         node-version: [18.x]  # Testing with multiple Node versions
