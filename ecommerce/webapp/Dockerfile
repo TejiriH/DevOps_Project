@@ -11,13 +11,14 @@ COPY ./package*.json ./
 RUN npm install
 
 # Copy the rest of the code and build the React app
-COPY . .
+COPY ./ ./
+
+# Ensure permissions are correct
+RUN chmod -R 755 /app
 
 # Build the app for production
 RUN npm run build
 
-# Ensure permissions are correct
-RUN chmod -R 755 /app
 
 # Use an official Nginx image to serve the built React app
 FROM nginx:alpine
