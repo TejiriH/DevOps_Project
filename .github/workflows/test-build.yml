@@ -80,7 +80,6 @@ jobs:
       working-directory: ./ecommerce/webapp
       run: |
         npm install --save-dev supertest
-        npm ci --include=dev
         npm test -- --coverage --maxWorkers=2
 
     # Build the Webapp (optional, depending on your setup)
