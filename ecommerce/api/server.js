@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const products = require('./routes/products'); // Example modularized routes
+const products = require('./routes/products'); // Modularized routes
 const users = require('./routes/users');
 const orders = require('./routes/orders');
 
@@ -9,10 +9,15 @@ const app = express();
 // Middleware
 app.use(express.json());
 
-// API routes
+// API Routes
 app.use('/api/products', products);
 app.use('/api/users', users);
 app.use('/api/orders', orders);
+
+// Root route for the application
+app.get('/', (req, res) => {
+    res.status(200).send('Welcome to the E-commerce Application');
+  });
 
 // Serve React build files in production
 if (process.env.NODE_ENV === 'production') {
@@ -22,9 +27,17 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// Start the server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Export the app for testing or use in other modules
+module.exports = app;
+
+// Start the server only if this script is run directly
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}
+
 
 
 

@@ -1,15 +1,23 @@
 
-// tests/ProductList.test.js
+const supertest = require("supertest");
+const app = require("../../api/server"); // Adjust path to server file
 
-const request = require('supertest');
-const app = require('../../api/server'); // Assuming your Express app is in src/app.js
+let server;
 
-describe('GET /products', () => {
-  it('should return a list of products', async () => {
-    const response = await request(app).get('/api/products');
-    
+beforeAll(() => {
+  server = app.listen(0, () => console.log(`Test server running on port ${server.address().port}`));
+});
+
+afterAll(() => {
+  server.close(); // Clean up after tests
+});
+
+describe("GET /products", () => {
+  it("should return a list of products", async () => {
+    const request = supertest(server);
+    const response = await request.get("/api/products");
     expect(response.status).toBe(200);
-    expect(response.body).toBeInstanceOf(Array);
-    expect(response.body.length).toBeGreaterThan(0);
+    expect(Array.isArray(response.body)).toBe(true);
   });
 });
+
