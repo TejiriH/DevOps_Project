@@ -6,6 +6,7 @@ on:
       - main
    # paths:
     #  - 'ecommerce-platform/**'  # Trigger on push to any file inside the ecommerce folder
+
   pull_request:
     branches:
       - main
@@ -24,29 +25,20 @@ jobs:
         node-version: [18.x]  # Testing with multiple Node versions
 
     steps:
-    # Check out the code
+    # Step 1: Check out the code
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    # Set up Node.js
+    # Step 2: Set up Node.js
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
 
-
-    - name: Location
-      working-directory: ./ecommerce/api
-      run: |
-        pwd
-        ls
-
-    # Install dependencies for the API and Webapp
+    # Step 3: Install dependencies for the API and Webapp
     - name: Install API dependencies
       working-directory: ./ecommerce/api
       run: |
-        pwd
-        ls
         npm install
 
     - name: Install Webapp dependencies
@@ -59,19 +51,7 @@ jobs:
         chmod +x ./ecommerce/api/node_modules/.bin/jest
         chmod +x ./ecommerce/webapp/node_modules/.bin/jest
 
-    # Run ESLint in the API
-    # - name: Run ESLint for API
-    #   working-directory: ./ecommerce/api
-    #   run: |
-    #     npx eslint . --ext .js
-
-    # # Run ESLint in the Webapp
-    # - name: Run ESLint for Webapp
-    #   working-directory: ./ecommerce/webapp
-    #   run: |
-    #     npx eslint . --ext .js,.jsx
-
-    # Run Jest tests for the API
+    # Step 4: Run Jest tests for the API
     - name: Run Jest tests for API
       working-directory: ./ecommerce/api
       run: |
@@ -79,14 +59,14 @@ jobs:
         npm ci --include=dev
         npm test -- --coverage --maxWorkers=2
 
-    # Run Jest tests for the Webapp
+    # Step 5: Run Jest tests for the Webapp
     - name: Run Jest tests for Webapp
       working-directory: ./ecommerce/webapp
       run: |
         npm install --save-dev supertest
         npm test -- --coverage --maxWorkers=2
 
-    # Build the Webapp (optional, depending on your setup)
+    # Step 6: Build the Webapp (optional, depending on your setup)
     - name: Build Webapp
       working-directory: ./ecommerce/webapp
       run: |
@@ -95,7 +75,7 @@ jobs:
 
   Create-dockerfile-image:
     runs-on: ubuntu-latest
-    # needs: build-and-test
+    needs: build-and-test
 
     permissions:
       contents: read  # Read access for code checkout
