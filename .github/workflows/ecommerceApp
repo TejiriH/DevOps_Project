@@ -1,0 +1,153 @@
+name: E-Commerce platform App CI
+
+on:
+  push:
+    branches:
+      - main
+   # paths:
+    #  - 'ecommerce-platform/**'  # Trigger on push to any file inside the ecommerce folder
+  pull_request:
+    branches:
+      - main
+   # paths:
+    #  - 'ecommerce-platform/**'  # Trigger on pull requests affecting the ecommerce folder
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read   # Read access (if needed for deployment)
+      #actions: write   # Write access for actions (needed for deployment)
+
+    strategy:
+      matrix:
+        node-version: [18.x]  # Testing with multiple Node versions
+
+    steps:
+    # Check out the code
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    # Set up Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+
+    - name: Location
+      working-directory: ./ecommerce/api
+      run: |
+        pwd
+        ls
+
+    # Install dependencies for the API and Webapp
+    - name: Install API dependencies
+      working-directory: ./ecommerce/api
+      run: |
+        pwd
+        ls
+        npm install
+
+    - name: Install Webapp dependencies
+      working-directory: ./ecommerce/webapp
+      run: |
+        npm install
+
+    - name: Fix permissions for Jest executable
+      run: |
+        chmod +x ./ecommerce/api/node_modules/.bin/jest
+        chmod +x ./ecommerce/webapp/node_modules/.bin/jest
+
+    # Run ESLint in the API
+    # - name: Run ESLint for API
+    #   working-directory: ./ecommerce/api
+    #   run: |
+    #     npx eslint . --ext .js
+
+    # # Run ESLint in the Webapp
+    # - name: Run ESLint for Webapp
+    #   working-directory: ./ecommerce/webapp
+    #   run: |
+    #     npx eslint . --ext .js,.jsx
+
+    # Run Jest tests for the API
+    - name: Run Jest tests for API
+      working-directory: ./ecommerce/api
+      run: |
+        npm install --save-dev supertest
+        npm ci --include=dev
+        npm test -- --coverage --maxWorkers=2
+
+    # Run Jest tests for the Webapp
+    - name: Run Jest tests for Webapp
+      working-directory: ./ecommerce/webapp
+      run: |
+        npm install --save-dev supertest
+        npm test -- --coverage --maxWorkers=2
+
+    # Build the Webapp (optional, depending on your setup)
+    - name: Build Webapp
+      working-directory: ./ecommerce/webapp
+      run: |
+        chmod +x ./node_modules/.bin/react-scripts
+        npm run build
+
+  Create-dockerfile-image:
+    runs-on: ubuntu-latest
+    # needs: build-and-test
+
+    permissions:
+      contents: read  # Read access for code checkout
+      actions: write   # Write access for actions (needed for deployment)
+
+    steps:
+    # Step 1: Checkout the code
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    # Step 2: Log in to Docker Hub
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    # Step 3: Build Docker images
+    - name: Build Backend Docker image
+      run: |
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/my-backend:v1.0.0 ./ecommerce/api
+
+    - name: Build Frontend Docker image
+      run: |
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/my-frontend:v1.0.1 ./ecommerce/webapp
+
+    # Step 4: Push Docker images to Docker Hub
+    - name: Push Backend Docker image
+      run: |
+        docker push ${{ secrets.DOCKER_USERNAME }}/my-backend:v1.0.0
+
+    - name: Push Frontend Docker image
+      run: |
+        docker push ${{ secrets.DOCKER_USERNAME }}/my-frontend:v1.0.1
+
+    # Step 5: Deploy to EC2 via SSH
+    - name: Deploy to EC2 via SSH
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ${{ secrets.AWS_HOST }}
+        username: ${{ secrets.AWS_USER }}
+        key: ${{ secrets.AWS_EC2_PRIVATE_KEY }}
+        port: 22
+        script: |
+          # Stop and remove any existing containers
+          docker rm -f backend frontend || true
+
+          # Pull and run the backend container
+          docker pull ${{ secrets.DOCKER_USERNAME }}/my-backend:v1.0.0
+          docker run -d -p 5000:5000 --name backend ${{ secrets.DOCKER_USERNAME }}/my-backend:v1.0.0
+
+          # Pull and run the frontend container
+          docker pull ${{ secrets.DOCKER_USERNAME }}/my-frontend:v1.0.1
+          docker run -d -p 80:80 --name frontend ${{ secrets.DOCKER_USERNAME }}/my-frontend:v1.0.1
+
