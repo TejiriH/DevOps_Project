@@ -1,0 +1,5 @@
+#database_user   = "admin"
+database_name   = "wordpress-db"
+#database_pwd    = "Henryfly09"
+domain_name     = "whuatorhetejiri.click"
+subdomain       = "www"
