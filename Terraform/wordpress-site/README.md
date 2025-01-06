@@ -48,10 +48,10 @@ This project demonstrates using Terraform scripts to hosting a high-availability
 ## Detailed Architecture Components
 
 ### 1. **VPC**
-   - CIDR Block: `10.0.0.0/16`
+   - CIDR Block: `145.255.0.0/20`
    - Subnets:
-     - **2 Public Subnets** (e.g., `10.0.1.0/24`, `10.0.2.0/24`)
-     - **4 Private Subnets** (e.g., `10.0.3.0/24`, `10.0.4.0/24`, `10.0.5.0/24`, `10.0.6.0/24`)
+     - **2 Public Subnets** (e.g., `145.255.0.0/27, 145.255.0.32/27`)
+     - **4 Private Subnets** (e.g., `145.255.0.64/27, 145.255.0.96/27, 145.255.0.128/27, 145.255.0.160/27`)
    - Availability Zones: **3**
 
 ### 2. **NAT Gateways and Route Tables**
@@ -95,6 +95,47 @@ This project demonstrates using Terraform scripts to hosting a high-availability
    - Configured to route traffic to the ALB via a domain name.
 
 ---
+
+```hcl
+wordpress-site/
+│
+├── main/
+│   ├── main.tf
+│   ├── variables.tf
+│   ├── outputs.tf
+│   └── provider.tf
+│
+└── modules/
+    ├── vpc/
+    │   ├── main.tf
+    │   ├── variables.tf
+    │   └── outputs.tf
+    │
+    ├── database/
+    │   ├── main.tf
+    │   ├── variables.tf
+    │   └── outputs.tf
+    │
+    ├── efs/
+    │   ├── main.tf
+    │   ├── variables.tf
+    │   └── outputs.tf
+    │
+    ├── loadbalancer/
+    │   ├── main.tf
+    │   ├── variables.tf
+    │   └── outputs.tf
+    │
+    ├── autoscalar/
+    │   ├── main.tf
+    │   ├── variables.tf
+    │   └── outputs.tf
+    │
+    └── dns/
+        ├── main.tf
+        ├── variables.tf
+        └── outputs.tf
+```
 
 ## Deployment Workflow
 
