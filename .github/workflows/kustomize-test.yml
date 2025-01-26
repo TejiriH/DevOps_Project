@@ -49,4 +49,4 @@ jobs:
       - name: Deploy to EKS with Kustomize
         run: |
           echo "Deploying application using Kustomize..."
-          kubectl apply -k overlays/prod
+          kubectl apply -k ./overlays/prod
