@@ -43,6 +43,8 @@ jobs:
 
       - name: Update Kubeconfig
         run: |
+          cd ./kustomize-static-site
+          ls
           echo "Updating kubeconfig for EKS cluster..."
           aws eks update-kubeconfig --name kustomize-demo --region eu-north-1
 
