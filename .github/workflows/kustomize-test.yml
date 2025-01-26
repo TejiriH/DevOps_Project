@@ -43,12 +43,12 @@ jobs:
 
       - name: Update Kubeconfig
         run: |
-          cd ./kustomize-static-site
-          ls
           echo "Updating kubeconfig for EKS cluster..."
           aws eks update-kubeconfig --name kustomize-demo --region eu-north-1
 
       - name: Deploy to EKS with Kustomize
         run: |
+          cd ./kustomize-static-site
+          ls
           echo "Deploying application using Kustomize..."
           kubectl apply -k ./overlays/prod
