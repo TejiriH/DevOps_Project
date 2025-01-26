@@ -46,9 +46,18 @@ jobs:
           echo "Updating kubeconfig for EKS cluster..."
           aws eks update-kubeconfig --name kustomize-demo --region eu-north-1
 
+      - name: Check current directory
+        run: |
+          pwd
+          ls
+
       - name: Deploy to EKS with Kustomize
         run: |
+          # Debug: Check the directory structure
+          pwd
+          ls -R  # List all files and directories recursively
           cd ./kustomize-static-site
-          ls
+          ls  # List files inside kustomize-static-site
           echo "Deploying application using Kustomize..."
           kubectl apply -k ./overlays/prod
+
