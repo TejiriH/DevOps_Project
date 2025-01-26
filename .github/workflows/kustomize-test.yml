@@ -41,21 +41,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-north-1
 
-      - name: Check if EKS Cluster Exists
-        id: eks_check
-        run: |
-          if ! aws eks describe-cluster --name kustomize-demo --region eu-north-1 >/dev/null 2>&1; then
-            echo "EKS Cluster does not exist. Creating it..."
-            eksctl create cluster --name kustomize-demo --region eu-north-1 --nodegroup-name standard-workers --node-type t3.medium --nodes 2 --nodes-min 1 --nodes-max 3
-          else
-            echo "EKS Cluster exists. Skipping creation..."
-          fi
-
-      - name: Wait for EKS Cluster to be Ready (if created)
-        run: |
-          echo "Waiting for EKS cluster to be in Active state..."
-          aws eks wait cluster-active --name kustomize-demo --region eu-north-1
-
       - name: Update Kubeconfig
         run: |
           echo "Updating kubeconfig for EKS cluster..."
