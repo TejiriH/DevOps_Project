@@ -21,7 +21,17 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Test simple echo
+        run: echo "Hello, world!"
+
+      - name: Check current directory
+        run: |
+          echo "Checking directory"
+          pwd
+          ls
+        shell: bash
 
       - name: Install Kubectl
         run: |
@@ -46,18 +56,7 @@ jobs:
           echo "Updating kubeconfig for EKS cluster..."
           aws eks update-kubeconfig --name kustomize-demo --region eu-north-1
 
-      - name: Check current directory
-        run: |
-          pwd
-          ls
-
       - name: Deploy to EKS with Kustomize
         run: |
-          # Debug: Check the directory structure
-          pwd
-          ls -R  # List all files and directories recursively
-          cd ./kustomize-static-site
-          ls  # List files inside kustomize-static-site
           echo "Deploying application using Kustomize..."
-          kubectl apply -k ./overlays/prod
-
+          kubectl apply -k .kustomize-static-site/overlays/prod
