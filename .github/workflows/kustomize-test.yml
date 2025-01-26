@@ -59,4 +59,6 @@ jobs:
       - name: Deploy to EKS with Kustomize
         run: |
           echo "Deploying application using Kustomize..."
-          kubectl apply -k .kustomize-static-site/overlays/prod
+          cd kustomize-static-site
+          ls
+          kubectl apply -k overlays/prod
