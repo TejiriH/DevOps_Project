@@ -42,17 +42,26 @@ jobs:
           aws-region: eu-north-1
 
       - name: Check if EKS Cluster Exists
+        id: eks_check
         run: |
           if ! aws eks describe-cluster --name kustomize-demo --region eu-north-1 >/dev/null 2>&1; then
             echo "EKS Cluster does not exist. Creating it..."
             eksctl create cluster --name kustomize-demo --region eu-north-1 --nodegroup-name standard-workers --node-type t3.medium --nodes 2 --nodes-min 1 --nodes-max 3
           else
-            echo "EKS Cluster exists. Updating kubeconfig..."
+            echo "EKS Cluster exists. Skipping creation..."
           fi
 
+      - name: Wait for EKS Cluster to be Ready (if created)
+        run: |
+          echo "Waiting for EKS cluster to be in Active state..."
+          aws eks wait cluster-active --name kustomize-demo --region eu-north-1
+
       - name: Update Kubeconfig
-        run: aws eks update-kubeconfig --name kustomize-demo --region eu-north-1
+        run: |
+          echo "Updating kubeconfig for EKS cluster..."
+          aws eks update-kubeconfig --name kustomize-demo --region eu-north-1
 
       - name: Deploy to EKS with Kustomize
-        run: kubectl apply -k overlays/prod
-
+        run: |
+          echo "Deploying application using Kustomize..."
+          kubectl apply -k overlays/prod
