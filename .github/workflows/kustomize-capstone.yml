@@ -46,6 +46,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Checking directory
+        run:  |
+          pwd
+          ls
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -60,7 +65,5 @@ jobs:
         working-directory: ./kustomize-capstone
         run: |
           ls
-          ls -R
           pwd
-          cd kustomize-capstone
           kubectl apply -k kustomize/overlays/dev
