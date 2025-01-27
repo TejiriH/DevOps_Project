@@ -1,0 +1,15 @@
+resources:
+  - ../../base
+
+patches:
+  - path: deployment-patch.yaml
+
+configMapGenerator:
+  - name: my-app-config
+    files:
+      - configmap.yaml
+
+secretGenerator:
+  - name: my-app-secret
+    literals:
+    #  - DATABASE_PASSWORD=supersecret
