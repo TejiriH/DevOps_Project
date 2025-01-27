@@ -31,7 +31,7 @@ jobs:
           ls
           ls -R
           docker build -t my-app .
-          docker tag my-app tejirih/my-app:${{ github.sha }}
+          docker tag my-app tejirih/my-app:${{ github.sha }} tejirih/my-app:latest
 
       - name: Push Docker image
         run: |
