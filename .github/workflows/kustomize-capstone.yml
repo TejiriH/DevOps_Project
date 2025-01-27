@@ -4,18 +4,17 @@ on:
   push:
     branches:
       - main
-
-  tags:
-      - '*'
     paths:
-        - kustomize-capstone/**  # Run only when files in 'kustomize-capstone' change
+      - kustomize-capstone/**  # Run only when files in 'kustomize-capstone' change
 
   pull_request:
     branches:
       - main
     paths:
-        - kustomize-capstone/**  # Run for PRs affecting 'kustomize-capstone'
-
+      - kustomize-capstone/**  # Run for PRs affecting 'kustomize-capstone'
+    tags:
+      - '*'  # This was incorrectly indented under 'push'
+  
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
