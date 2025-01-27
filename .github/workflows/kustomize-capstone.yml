@@ -59,4 +59,5 @@ jobs:
       - name: Deploy to Kubernetes (using Kustomize)
         working-directory: ./kustomize-capstone
         run: |
+          cd kustomize-capstone
           kubectl apply -k kustomize/overlays/dev
