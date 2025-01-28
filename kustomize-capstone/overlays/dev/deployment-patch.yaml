@@ -7,7 +7,7 @@ spec:
   template:
     spec:
       containers:
-        - name: my-app
+        - name: nginx
           image: tejirih/static-site:latest
           env:
             - name: ENV

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: tejirih/kustomize-site:latest
+          image: tejirih/my-app:latest
           ports:
             - containerPort: 80
           env:
