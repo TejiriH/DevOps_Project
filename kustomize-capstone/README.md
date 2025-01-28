@@ -2,7 +2,7 @@
 
 Deploying a web application in a Kubernetes environment often requires distinct configurations for development, staging, and production environments. This guide demonstrates how to use **Kustomize** for managing these configurations efficiently and integrating them into a CI/CD pipeline.
 
-![alt](./img/line-dg-pj.png)
+![alt](./img/kustomize.jpg)
 
 ---
 
