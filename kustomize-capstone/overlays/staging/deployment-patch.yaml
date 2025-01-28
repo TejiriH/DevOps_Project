@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
         - name: my-app
-          image: tejirih/kustomize-site:latest
+          image: tejirih/my-app:latest
           env:
             - name: ENV
               value: "staging"
